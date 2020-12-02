@@ -1,5 +1,7 @@
 '''
 The input was so small that brute force can solve in a few seconds, any longer and I would've optimized. :)
+
+The optimal solution is probably something similar to https://leetcode.com/problems/3sum/
 '''
 
 inp = open('1.txt','r')
