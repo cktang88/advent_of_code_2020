@@ -9,8 +9,7 @@ for i in range(1, len(arr)):
     b+= 1
 print((a+1)*(b+1))
 
-narr = [arr[0]]
-narr.extend(arr[i]-arr[i-1] for i in range(1, len(arr)))
+narr = [arr[0], *(t-s for s,t in zip(arr, arr[1:]))]
 blocks = [0]*len(narr)
 cur = 0
 for c in narr:
