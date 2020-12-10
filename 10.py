@@ -14,7 +14,6 @@ for c in narr:
   else: blocks[cur]+= 1; cur=0
 
 prod, mult=1, [1,1, 2, 4, 7, 11, 16, 22] # quadratic sequence
-for i,b in enumerate(blocks):
-  if b!=0:
+for i,b in enumerate(filter(lambda b: b>0, blocks)):
     prod*= mult[i]**b
 print(prod)
