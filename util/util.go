@@ -39,3 +39,15 @@ func IntParse(s string) int {
 	Check(err)
 	return num
 }
+
+// Any defines a general any type
+type Any interface{}
+
+// Map executes a function for each element
+func Map(arr *[]Any, fn func(Any, Any) Any) []Any {
+	newArr := make([]Any, len(*arr))
+	for i, n := range *arr {
+		newArr[i] = fn(i, n)
+	}
+	return newArr
+}
