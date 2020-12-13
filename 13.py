@@ -14,34 +14,57 @@ for i,b in enumerate(arr[1].split(',')):
 print(buses)
 
 
-orig = buses[0][1]
-buses = buses[1:]
-print(buses)
+
 
 def solve(bus, mult):
-  rem, hop = bus
   # solve: hop * x + rem = 0 (mod mult)
-  for i in range(1, max(hop, mult)):
+  rem, hop = bus
+  for i in range(1, max(hop, mult)*10):
     if (hop * i - rem)%mult == 0:
       return i
 
-      
+def shift(oldtracks):
+  shift = oldtracks[0][0]
+  return shift, [((t[0] - shift)%t[1], t[1]) for t in oldtracks]
+
+oldtracks = buses
+TOTAL_SHIFT = 0
+
 tracks = []
-for bus in buses:
-  start = solve(bus)*bus[1] - bus[0]
-  print(bus, solve(bus), start//orig)
-  hop = bus[1] * orig
-  tracks.append((start, hop))
-print(tracks)
-start, hop = max(tracks, key=lambda x: x[1])
-print(start, hop)
+while True:
+  orig = oldtracks[0][1]
+  oldtracks = oldtracks[1:]
+  tracks = []
+  for bus in oldtracks:
+    N = solve(bus, orig)
+    start = N*bus[1] - bus[0]
+    print(bus, N, start//orig)
+    hop = bus[1] * orig
+    tracks.append((start, hop))
+  if len(tracks) > 1:
+    print(tracks)
+    addShift, tracks = shift(tracks)
+    TOTAL_SHIFT += addShift
+    print('shifted', tracks)
+    oldtracks = tracks
+  else:
+    break
+
+print(tracks, TOTAL_SHIFT)
+# start, hop = max(tracks, key=lambda x: x[1])
+# print(start, hop)
 # for i in range(100000000000000,150000000000000,orig):
 _max = 150000000000
+hop = tracks[0][0]
+for i in range(hop,_max, hop):
+  print(hop - TOTAL_SHIFT)
+  break
+
 # _max = 150000000000000
-for cur in range(start, _max, hop):
-  if all((cur-rem)%hop == 0 for (rem, hop) in tracks):
-    print(cur)
-    break
+# for cur in range(start, _max, hop):
+#   if all((cur-rem)%hop == 0 for (rem, hop) in tracks):
+#     print(cur, TOTAL_SHIFT)
+#     break
   # print(i)
 # for rem,b in buses:
 #   print(b-100001941136560%b, rem)
