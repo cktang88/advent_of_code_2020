@@ -44,11 +44,10 @@ part 2
 '''
 valid = [a for i,a in enumerate(other) if i not in bad_ids]
 print(len(valid), len(invalid), len(other))
-print('foooo')
+print('---------------------------------------')
 
 entries = []
-for c in range(len(valid[0])):
-  col = [o[c] for o in valid]
+for c, col in enumerate(zip(*valid)):
   good = [i for i,r in enumerate(rules) if all(follows(n, r) for n in col)]
   entries.append((len(good), c, good))
 se = sorted(entries)
